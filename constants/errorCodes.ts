@@ -15,4 +15,8 @@ export enum ErrorCodes {
   // Specific to Paste Creation
   ContentRequired = "CONTENT_REQUIRED",
   PasteCreationFailed = "PASTE_CREATION_FAILED",
+
+  // Specific to jobs/cleaner
+  Unauthorized = "UNAUTHORIZED",
+  CleanupFailed = "CLEANUP_FAILED",
 }

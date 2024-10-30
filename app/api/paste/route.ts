@@ -13,7 +13,7 @@ export async function POST(request: Request) {
 
     if (!content) {
       const errorResponse: ApiError = {
-        code: ErrorCodes.ContentRequired,
+        code: ErrorCodes.ContentRequired.toString(),
         message: "Content is required.",
       };
 
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ pasteCode: paste.pasteCode }, { status: 201 });
   } catch (error) {
     const errorResponse: ApiError = {
-      code: ErrorCodes.InternalServerError,
+      code: ErrorCodes.InternalServerError.toString(),
       message: "An unexpected error occurred.",
       details:
         process.env.NODE_ENV === "development" ? String(error) : undefined,
@@ -47,4 +47,28 @@ export async function POST(request: Request) {
 
     return NextResponse.json(errorResponse, { status: 500 });
   }
+}
+
+export async function GET() {
+  return new Response("Method GET Not Allowed", { status: 405 });
+}
+
+export async function PUT() {
+  return new Response("Method PUT Not Allowed", { status: 405 });
+}
+
+export async function DELETE() {
+  return new Response("Method DELETE Not Allowed", { status: 405 });
+}
+
+export async function PATCH() {
+  return new Response("Method PATCH Not Allowed", { status: 405 });
+}
+
+export async function OPTIONS() {
+  return new Response("Method OPTIONS Not Allowed", { status: 405 });
+}
+
+export async function HEAD() {
+  return new Response("Method HEAD Not Allowed", { status: 405 });
 }

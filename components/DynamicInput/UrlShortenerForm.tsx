@@ -3,10 +3,10 @@
 
 import React, { useState, FormEvent } from "react";
 import { CardBody, Input, Button, Spacer } from "@nextui-org/react";
-import { FaClipboard } from "react-icons/fa";
+import { FaXmark } from "react-icons/fa6";
 
 import { Alert } from "@/components/ui/alert";
-import { copyTextToClipboard } from "@/lib/utils";
+import CopyButton from "@/components/DynamicInput/CopyButton";
 
 const UrlShortenerForm: React.FC = () => {
   // State variables with proper typing
@@ -98,18 +98,9 @@ const UrlShortenerForm: React.FC = () => {
               <strong>Short URL: </strong>
               {`${window.location.origin}/r/${urlResponseMessage}`}
             </span>
-            <Button
-              color="primary"
-              size="sm"
-              startContent={<FaClipboard />}
-              onPress={() => {
-                copyTextToClipboard(
-                  `${window.location.origin}/r/${urlResponseMessage}`,
-                );
-              }}
-            >
-              Copy
-            </Button>
+            <CopyButton
+              content={`${window.location.origin}/r/${urlResponseMessage}`}
+            />
           </Alert>
           <Spacer y={3} />
           <Alert className="flex justify-between items-center" color="success">
@@ -117,18 +108,9 @@ const UrlShortenerForm: React.FC = () => {
               <strong>Info URL: </strong>
               {`${window.location.origin}/i/${urlResponseMessage}`}
             </span>
-            <Button
-              color="primary"
-              size="sm"
-              startContent={<FaClipboard />}
-              onPress={() => {
-                copyTextToClipboard(
-                  `${window.location.origin}/i/${urlResponseMessage}`,
-                );
-              }}
-            >
-              Copy
-            </Button>
+            <CopyButton
+              content={`${window.location.origin}/i/${urlResponseMessage}`}
+            />
           </Alert>
         </>
       )}
@@ -142,6 +124,7 @@ const UrlShortenerForm: React.FC = () => {
           <Button
             color="danger"
             size="sm"
+            startContent={<FaXmark />}
             onPress={() => {
               setUrlResponseError("");
             }}

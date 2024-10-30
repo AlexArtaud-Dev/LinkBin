@@ -15,7 +15,7 @@ export async function POST(request: Request) {
 
     if (!url) {
       const errorResponse: ApiError = {
-        code: ErrorCodes.UrlRequired,
+        code: ErrorCodes.UrlRequired.toString(),
         message: "URL is required.",
       };
 
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
       url = parsedUrl.toString();
     } catch (error) {
       const errorResponse: ApiError = {
-        code: ErrorCodes.InvalidUrlFormat,
+        code: ErrorCodes.InvalidUrlFormat.toString(),
         message: "Invalid URL format.",
       };
 
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     const errorResponse: ApiError = {
-      code: ErrorCodes.InternalServerError,
+      code: ErrorCodes.InternalServerError.toString(),
       message: "An unexpected error occurred.",
       // Optionally include error details in development
       details:
@@ -83,4 +83,28 @@ export async function POST(request: Request) {
 
     return NextResponse.json(errorResponse, { status: 500 });
   }
+}
+
+export async function GET() {
+  return new Response("Method GET Not Allowed", { status: 405 });
+}
+
+export async function PUT() {
+  return new Response("Method PUT Not Allowed", { status: 405 });
+}
+
+export async function DELETE() {
+  return new Response("Method DELETE Not Allowed", { status: 405 });
+}
+
+export async function PATCH() {
+  return new Response("Method PATCH Not Allowed", { status: 405 });
+}
+
+export async function OPTIONS() {
+  return new Response("Method OPTIONS Not Allowed", { status: 405 });
+}
+
+export async function HEAD() {
+  return new Response("Method HEAD Not Allowed", { status: 405 });
 }

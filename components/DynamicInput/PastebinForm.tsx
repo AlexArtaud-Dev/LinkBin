@@ -3,10 +3,10 @@
 
 import React, { useState, FormEvent } from "react";
 import { CardBody, Textarea, Button, Spacer } from "@nextui-org/react";
-import { FaClipboard } from "react-icons/fa";
+import { FaXmark } from "react-icons/fa6";
 
 import { Alert } from "@/components/ui/alert";
-import { copyTextToClipboard } from "@/lib/utils";
+import CopyButton from "@/components/DynamicInput/CopyButton";
 
 const PastebinForm: React.FC = () => {
   // State variables with proper typing
@@ -76,18 +76,9 @@ const PastebinForm: React.FC = () => {
               <strong>Paste URL: </strong>
               {`${window.location.origin}/p/${pasteResponseMessage}`}
             </span>
-            <Button
-              color="primary"
-              size="sm"
-              startContent={<FaClipboard />}
-              onPress={() => {
-                copyTextToClipboard(
-                  `${window.location.origin}/p/${pasteResponseMessage}`,
-                );
-              }}
-            >
-              Copy
-            </Button>
+            <CopyButton
+              content={`${window.location.origin}/p/${pasteResponseMessage}`}
+            />
           </Alert>
           <Spacer y={3} />
           <Alert className="flex justify-between items-center" color="success">
@@ -95,18 +86,9 @@ const PastebinForm: React.FC = () => {
               <strong>Info URL: </strong>
               {`${window.location.origin}/i/${pasteResponseMessage}`}
             </span>
-            <Button
-              color="primary"
-              size="sm"
-              startContent={<FaClipboard />}
-              onPress={() => {
-                copyTextToClipboard(
-                  `${window.location.origin}/i/${pasteResponseMessage}`,
-                );
-              }}
-            >
-              Copy
-            </Button>
+            <CopyButton
+              content={`${window.location.origin}/i/${pasteResponseMessage}`}
+            />
           </Alert>
         </>
       )}
@@ -120,6 +102,7 @@ const PastebinForm: React.FC = () => {
           <Button
             color="danger"
             size="sm"
+            startContent={<FaXmark />}
             variant="flat"
             onPress={() => {
               setPasteResponseError("");

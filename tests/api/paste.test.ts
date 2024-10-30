@@ -76,7 +76,7 @@ describe('POST /api/paste', () => {
 
     expect(response.status).toBe(400);
     expect(data).toEqual({
-      code: ErrorCodes.ContentRequired,
+      code: ErrorCodes.ContentRequired.toString(),
       message: 'Content is required.',
     });
   });
@@ -94,7 +94,7 @@ describe('POST /api/paste', () => {
 
     expect(response.status).toBe(500);
     expect(data).toEqual({
-      code: ErrorCodes.InternalServerError,
+      code: ErrorCodes.InternalServerError.toString(),
       message: 'An unexpected error occurred.',
     });
   });

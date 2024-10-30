@@ -109,7 +109,7 @@ describe('POST /api/shorten', () => {
 
     expect(response.status).toBe(400);
     expect(data).toEqual({
-      code: ErrorCodes.UrlRequired,
+      code: ErrorCodes.UrlRequired.toString(),
       message: 'URL is required.',
     });
   });
@@ -125,7 +125,7 @@ describe('POST /api/shorten', () => {
 
     expect(response.status).toBe(400);
     expect(data).toEqual({
-      code: ErrorCodes.InvalidUrlFormat,
+      code: ErrorCodes.InvalidUrlFormat.toString(),
       message: 'Invalid URL format.',
     });
   });
@@ -143,7 +143,7 @@ describe('POST /api/shorten', () => {
 
     expect(response.status).toBe(500);
     expect(data).toEqual({
-      code: ErrorCodes.InternalServerError,
+      code: ErrorCodes.InternalServerError.toString(),
       message: 'An unexpected error occurred.',
     });
   });

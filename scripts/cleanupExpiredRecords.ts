@@ -1,7 +1,6 @@
-// scripts/cleanupExpiredRecords.ts
 import prisma from "@/lib/prisma";
 
-async function cleanupExpiredRecords() {
+export async function cleanupExpiredRecords() {
   const now = new Date();
 
   // Delete expired short URLs
@@ -24,11 +23,3 @@ async function cleanupExpiredRecords() {
 
   console.log("Expired records cleaned up.");
 }
-
-cleanupExpiredRecords()
-  .catch((error) => {
-    console.error("Error cleaning up expired records:", error);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
