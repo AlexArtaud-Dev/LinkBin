@@ -2,10 +2,10 @@
 
 import { redirect } from "next/navigation"; // Import redirect
 import { FaEye, FaClock, FaLink, FaExternalLinkAlt } from "react-icons/fa";
-
-import prisma from "@/lib/prisma";
 import { headers } from "next/headers"; // Import headers
 import React from "react";
+
+import prisma from "@/lib/prisma";
 import CopyableText from "@/components/DynamicInput/CopyableText";
 
 interface PageProps {

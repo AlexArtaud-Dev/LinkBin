@@ -2,9 +2,9 @@
 
 "use client"; // Designate this as a Client Component
 
-import React, { useState } from "react";
-import { FaClipboard, FaCheck } from "react-icons/fa";
+import React from "react";
 import toast from "react-hot-toast";
+
 import { copyTextToClipboard } from "@/lib/utils";
 
 interface CopyableTextProps {
@@ -12,7 +12,6 @@ interface CopyableTextProps {
 }
 
 const CopyableText: React.FC<CopyableTextProps> = ({ text }) => {
-
   const handleCopy = async () => {
     try {
       copyTextToClipboard(text);
@@ -23,13 +22,13 @@ const CopyableText: React.FC<CopyableTextProps> = ({ text }) => {
   };
 
   return (
-    <div
+    <button
       className="text-lg font-semibold cursor-pointer flex items-center"
       title="Click to copy"
       onClick={handleCopy}
     >
       {text}
-    </div>
+    </button>
   );
 };
 

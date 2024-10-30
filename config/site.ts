@@ -9,10 +9,6 @@ export const siteConfig = {
       label: "Shorten",
       href: "/s",
     },
-    {
-      label: "Informations",
-      href: "/i",
-    },
   ],
   links: {
     github: "https://github.com/AlexArtaud-Dev/LinkBin",
