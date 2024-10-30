@@ -39,5 +39,5 @@ COPY --from=builder /app/.env ./
 # Expose port
 EXPOSE 3000
 
-# Start the app
-CMD ["npm", "run", "start"]
+# Start the app and run migrations
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run start"]

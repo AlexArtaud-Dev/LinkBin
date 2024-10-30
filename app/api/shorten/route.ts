@@ -1,41 +1,70 @@
 // app/api/shorten/route.ts
+
+import { URL } from "url";
+
 import { NextResponse } from "next/server";
 import { nanoid } from "nanoid";
 
 import prisma from "@/lib/prisma";
+import { ErrorCodes } from "@/constants/errorCodes";
+import { ApiError } from "@/types/apiError";
 
 export async function POST(request: Request) {
   try {
-    const { url } = await request.json();
+    let { url } = await request.json();
 
     if (!url) {
-      return NextResponse.json({ error: "URL is required" }, { status: 400 });
+      const errorResponse: ApiError = {
+        code: ErrorCodes.UrlRequired,
+        message: "URL is required.",
+      };
+
+      return NextResponse.json(errorResponse, { status: 400 });
     }
 
-    // Validate URL format (optional but recommended)
-    const urlPattern = new RegExp(
-      "^(https?:\\/\\/)?" + // protocol
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-        "(\\#[-a-z\\d_]*)?$",
-      "i",
-    ); // fragment locator
+    // Normalize and validate URL
+    try {
+      const parsedUrl = new URL(url);
 
-    if (!urlPattern.test(url)) {
+      url = parsedUrl.toString();
+    } catch (error) {
+      const errorResponse: ApiError = {
+        code: ErrorCodes.InvalidUrlFormat,
+        message: "Invalid URL format.",
+      };
+
+      return NextResponse.json(errorResponse, { status: 400 });
+    }
+
+    // Check if the URL already exists in the database
+    const existingUrl = await prisma.shortUrl.findFirst({
+      where: {
+        originalUrl: url,
+      },
+    });
+
+    if (existingUrl) {
+      // If it exists, return the existing short code
       return NextResponse.json(
-        { error: "Invalid URL format" },
-        { status: 400 },
+        { shortCode: existingUrl.shortCode },
+        { status: 200 },
       );
     }
 
     const shortCode = nanoid(6);
 
+    // Get PURGE_PERIOD from environment variables and calculate expiresAt
+    const purgePeriod = parseInt(process.env.PURGE_PERIOD || "30", 10);
+    const expiresAt = new Date();
+
+    expiresAt.setDate(expiresAt.getDate() + purgePeriod);
+
+    // Create a new short URL entry
     const shortUrl = await prisma.shortUrl.create({
       data: {
         originalUrl: url,
         shortCode,
+        expiresAt,
       },
     });
 
@@ -44,9 +73,14 @@ export async function POST(request: Request) {
       { status: 201 },
     );
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to shorten URL" },
-      { status: 500 },
-    );
+    const errorResponse: ApiError = {
+      code: ErrorCodes.InternalServerError,
+      message: "An unexpected error occurred.",
+      // Optionally include error details in development
+      details:
+        process.env.NODE_ENV === "development" ? String(error) : undefined,
+    };
+
+    return NextResponse.json(errorResponse, { status: 500 });
   }
 }

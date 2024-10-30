@@ -1,15 +1,15 @@
 import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
+import { FaGithub } from "react-icons/fa";
 
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
-import { GithubIcon } from "@/components/icons";
 import Globe from "@/components/ui/globe";
 import HyperText from "@/components/ui/hyper-text";
 
 export default function Home() {
   return (
-    <section className="relative flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+    <section className="relative flex flex-col items-center justify-center pt-32 gap-4">
       <Globe className="absolute inset-0 z-0 opacity-45 dark:opacity-25" />
       <HyperText
         className="relative text-8xl font-bold text-black dark:text-white z-10"
@@ -26,7 +26,7 @@ export default function Home() {
         </div>
       </div>
       <Button as={Link} color="secondary" href={siteConfig.links.github}>
-        <GithubIcon /> View on GitHub
+        <FaGithub className="w-5 h-5" /> View on GitHub
       </Button>
     </section>
   );
