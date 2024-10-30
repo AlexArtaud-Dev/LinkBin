@@ -28,7 +28,7 @@ jobs:
       - name: Docker Compose Action
         uses: hoverkraft-tech/compose-action@v2.0.2
         with:
-          compose-file: "docker-compose.prod.yml"
+          compose-file: "docker-compose.yml"
           services: "app"
           up-flags: "--build"
 
