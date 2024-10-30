@@ -3,10 +3,10 @@ name: LinkBin GITHUB CI
 on:
   push:
     branches:
-      - main
+      - '**' # Triggers on any branch for any push
   pull_request:
     branches:
-      - main
+      - '**' # Triggers on any branch for any pull request
 
 jobs:
   build-and-test:
