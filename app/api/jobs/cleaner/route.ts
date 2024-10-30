@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { ApiError } from "@/types/apiError";
 import { ErrorCodes } from "@/constants/errorCodes";
-import { cleanupExpiredRecords } from "@/scripts/cleanupExpiredRecords";
+import { cleanupExpiredRecords } from "@/lib/cleanupExpiredRecords";
 
 // POST Handler
 export async function POST(request: Request) {

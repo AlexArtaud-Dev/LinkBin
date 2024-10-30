@@ -3,9 +3,12 @@ version: '3.8'
 services:
   app:
     container_name: app
-    image: izoniks/linkbin:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production-next
     ports:
-      - '3232:3000'
+      - '3000:3000'
     environment:
       NODE_ENV: production
       DATABASE_URL: postgresql://postgres:postgres@db:5432/linkbindb?schema=public
@@ -19,8 +22,8 @@ services:
   db:
     image: postgres:14
     container_name: db
-    # ports: Uncomment this line if you want to expose the database to the host machine
-    #   - '5432:5432'
+#    ports: Uncomment this line if you want to expose the database to the host machine
+#      - '5432:5432'
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -31,7 +34,10 @@ services:
 
   cleaner:
     container_name: cleaner
-    image: izoniks/linkbin-cleaner:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production-cleaner
     environment:
       CLEANER_API_URL: http://app:3000/api/jobs/cleaner
       CLEANER_API_KEY: 3TY85H0C6KyQyC2gMqEswKxSqII0hoOJ

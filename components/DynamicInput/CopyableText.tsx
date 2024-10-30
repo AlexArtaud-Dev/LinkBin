@@ -23,7 +23,7 @@ const CopyableText: React.FC<CopyableTextProps> = ({ text }) => {
 
   return (
     <button
-      className="text-lg font-semibold cursor-pointer flex items-center"
+      className="text-lg text-start font-semibold cursor-pointer flex items-center"
       title="Click to copy"
       onClick={handleCopy}
     >

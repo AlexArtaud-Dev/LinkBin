@@ -46,19 +46,3 @@ ENV NODE_ENV=production
 
 # Start the application and run migrations
 CMD ["sh", "-c", "npx prisma migrate deploy && npm run start"]
-
-# Stage 3: Production for Cleaner
-FROM node:18-alpine AS production-cleaner
-
-# Set working directory
-WORKDIR /app
-
-# Copy only required files for cleaner from the builder stage
-COPY --from=builder /app/package.json /app/package-lock.json ./
-COPY --from=builder /app/scripts/cleanupScheduler.js ./scripts/cleanupScheduler.js
-
-# Install only axios and node-cron for cleaner
-RUN npm install --only=production axios node-cron
-
-# Start the cleaner script
-CMD ["node", "./scripts/cleanupScheduler.js"]
