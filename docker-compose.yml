@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production-next
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/linkbindb?schema=public
+      PURGE_PERIOD: 30
+      CLEANER_API_KEY: 3TY85H0C6KyQyC2gMqEswKxSqII0hoOJ
+      CLEANER_API_URL: http://localhost:3000/api/jobs/cleaner
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:14
+    container_name: db
+#    ports: Uncomment this line if you want to expose the database to the host machine
+#      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: linkbindb
+    volumes:
+      - db_data_prod:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  cleaner:
+    container_name: cleaner
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production-cleaner
+    environment:
+      CLEANER_API_URL: http://app:3000/api/jobs/cleaner
+      CLEANER_API_KEY: 3TY85H0C6KyQyC2gMqEswKxSqII0hoOJ
+    depends_on:
+      - db
+      - app
+    restart: unless-stopped
+
+volumes:
+  db_data_prod:

@@ -80,16 +80,6 @@ const PastebinForm: React.FC = () => {
               content={`${window.location.origin}/p/${pasteResponseMessage}`}
             />
           </Alert>
-          <Spacer y={3} />
-          <Alert className="flex justify-between items-center" color="success">
-            <span>
-              <strong>Info URL: </strong>
-              {`${window.location.origin}/i/${pasteResponseMessage}`}
-            </span>
-            <CopyButton
-              content={`${window.location.origin}/i/${pasteResponseMessage}`}
-            />
-          </Alert>
         </>
       )}
       {pasteResponseError && (

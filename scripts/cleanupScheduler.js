@@ -54,12 +54,12 @@ async function triggerCleanup() {
  */
 function startScheduler() {
   // Schedule the task to run every 5 minutes
-  cron.schedule('*/5 * * * *', () => {
+  cron.schedule('*/1 * * * *', () => {
     console.log(`[${new Date().toISOString()}] 🔄 Triggering cleanup job.`);
     triggerCleanup();
   });
 
-  console.log('🕒 Cleanup scheduler started. Running every 5 minutes.');
+  console.log('🕒 Cleanup scheduler started. Running every 1 minutes.');
 }
 
 /**

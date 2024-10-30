@@ -20,6 +20,4 @@ export async function cleanupExpiredRecords() {
       },
     },
   });
-
-  console.log("Expired records cleaned up.");
 }

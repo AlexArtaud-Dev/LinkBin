@@ -8,5 +8,5 @@ export function cn(...inputs: ClassValue[]) {
 
 export function copyTextToClipboard(text: string) {
   navigator.clipboard.writeText(text);
-  toast.error("Copied to clipboard!", { icon: "📋" });
+  toast.success("Copied to clipboard!", { icon: "📋" });
 }

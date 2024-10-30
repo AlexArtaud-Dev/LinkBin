@@ -1,16 +1,14 @@
 {
-	"name": "next-app-template",
-	"version": "0.0.1",
+	"name": "linkbin",
+	"version": "1.0.0",
 	"private": true,
 	"scripts": {
 		"dev": "npx prisma migrate dev --name init && next dev --turbo",
 		"build": "next build",
-		"start": "concurrently \"npm run start:next\" \"npm run start:scheduler\"",
-		"start:next": "next start",
-		"start:scheduler": "nodemon --watch scripts/cleanupScheduler.js --exec node scripts/cleanupScheduler.js",
+		"start": "next start",
 		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
 		"test": "jest",
-		"production" : "npm run lint && npm run test && npm run build && npm run start"
+		"production": "npm run lint && npm run test && npm run build && npm run start"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.9.1",
